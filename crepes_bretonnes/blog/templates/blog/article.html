@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Ma page d'accueil{% endblock %}
+{% block content %}
+	{% if id_article == 5 %}
+	    article petit {{ id_article }}
+	{% elif id_article <= 5 %}
+	    article trés petit {{ id_article }}
+	{% else %}
+	    article taille inconnue {{ id_article }}
+	{% endif %}
+{% endblock %}

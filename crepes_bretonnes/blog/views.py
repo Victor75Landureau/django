@@ -6,7 +6,17 @@ def home(request):
     """ Exemple de page HTML, non valide pour que l'exemple soit concis """
     text = """<h1>Bienvenue sur mon blog !</h1>
               <p>Les crêpes bretonnes ça tue des mouettes en plein vol !</p>"""
-    return HttpResponse(text)
+    couleurs = {'FF0000':'rouge', 
+            'ED7F10':'orange', 
+            'FFFF00':'jaune', 
+            '00FF00':'vert', 
+            '0000FF':'bleu', 
+            '4B0082':'indigo', 
+            '660099':'violet'}
+    return render(request, 'blog/color.html', locals())
+
+def page(request):
+	return render(request, 'blog/mapage.html')
 
 def view_article(request, id_article):
     # Si l'ID est supérieur à 100, nous considérons que l'article n'existe pas
@@ -16,7 +26,8 @@ def view_article(request, id_article):
     if int(id_article) == 100:
     	return redirect(view_redirection)
 
-    return HttpResponse('<h1>Mon article {0} ici</h1>'.format(id_article))
+    return render(request, 'blog/article.html', locals())
+    """return HttpResponse('<h1>Mon article {0} ici</h1>'.format(id_article))"""
 
 def list_articles(request, month, year):
     """ Liste des articles d'un mois précis. """
