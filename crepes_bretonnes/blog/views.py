@@ -1,6 +1,8 @@
 from django.http import HttpResponse, Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from datetime import datetime 
+from blog.models import Article
+from .forms import ContactForm
 
 def home(request):
     """ Exemple de page HTML, non valide pour que l'exemple soit concis """
@@ -14,6 +16,38 @@ def home(request):
             '4B0082':'indigo', 
             '660099':'violet'}
     return render(request, 'blog/color.html', locals())
+
+def contact(request):
+	# Construire le formulaire, soit avec les données postées,
+    # soit vide si l'utilisateur accède pour la première fois
+    # à la page.
+    form = ContactForm(request.POST or None)
+    # Nous vérifions que les données envoyées sont valides
+    # Cette méthode renvoie False s'il n'y a pas de données 
+    # dans le formulaire ou qu'il contient des erreurs.
+    if form.is_valid(): 
+        # Ici nous pouvons traiter les données du formulaire
+        sujet = form.cleaned_data['sujet']
+        message = form.cleaned_data['message']
+        envoyeur = form.cleaned_data['envoyeur']
+        renvoi = form.cleaned_data['renvoi']
+
+        # Nous pourrions ici envoyer l'e-mail grâce aux données 
+        # que nous venons de récupérer
+        envoi = True
+    
+    # Quoiqu'il arrive, on affiche la page du formulaire.
+    return render(request, 'blog/contact.html', locals())
+
+def accueil(request):
+    """ Afficher tous les articles de notre blog """
+    articles = Article.objects.all() # Nous sélectionnons tous nos articles
+    return render(request, 'blog/accueil.html', {'derniers_articles': articles})
+
+def lire(request, id):
+    article = get_object_or_404(Article, id=id)
+    return render(request, 'blog/lire.html', {'article':article})
+
 
 def page(request):
 	return render(request, 'blog/mapage.html')
