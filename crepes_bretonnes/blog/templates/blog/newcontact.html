@@ -3,7 +3,7 @@
 {% if sauvegarde %}
     <p>Ce contact a bien été enregistré.</p>
 {% endif %}
-   
+<!-- <form action="{% url "contact" %}" method="post">-->
 <p>
     <form method="post" enctype="multipart/form-data" action=".">
        {% csrf_token %}

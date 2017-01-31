@@ -1,8 +1,9 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render, get_object_or_404
+from django.core.files import File
 from datetime import datetime 
-from blog.models import Article
-from .forms import ContactForm
+from blog.models import Article, Contact
+from .forms import ContactForm, PersonForm
 
 def home(request):
     """ Exemple de page HTML, non valide pour que l'exemple soit concis """
@@ -16,6 +17,10 @@ def home(request):
             '4B0082':'indigo', 
             '660099':'violet'}
     return render(request, 'blog/color.html', locals())
+
+def voir_contacts(request):
+    contacts = Contact.objects.all()
+    return render(request, 'blog/voir_contacts.html', {'contacts': contacts})
 
 def contact(request):
 	# Construire le formulaire, soit avec les données postées,
@@ -37,7 +42,31 @@ def contact(request):
         envoi = True
     
     # Quoiqu'il arrive, on affiche la page du formulaire.
+    #Pour plus de filtre sur les formulaires cf openclassroom
     return render(request, 'blog/contact.html', locals())
+
+def person(request):
+    form = PersonForm(request.POST or None)
+    if form.is_valid(): 
+        nom = form.cleaned_data['nom']
+        prenom = form.cleaned_data['prenom']
+    return render(request, 'blog/person.html', locals())
+
+def nouveau_contact(request):
+    sauvegarde = False
+    form = NouveauContactForm(request.POST or None, request.FILES)
+    if form.is_valid():
+        contact = Contact()
+        contact.nom = form.cleaned_data["nom"]
+        contact.adresse = form.cleaned_data["adresse"]
+        contact.photo = form.cleaned_data["photo"]
+        contact.save()
+        sauvegarde = True
+
+    return render(request, 'contact.html', {
+        'form': form, 
+        'sauvegarde': sauvegarde
+    })
 
 def accueil(request):
     """ Afficher tous les articles de notre blog """

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.text import Truncator
 
-from .models import Categorie, Article
+from .models import Categorie, Article, Contact
 
 class ArticleAdmin(admin.ModelAdmin):
     # Configuration de la liste d'articles
@@ -41,3 +41,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(Categorie)
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Contact)

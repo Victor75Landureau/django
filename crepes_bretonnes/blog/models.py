@@ -11,6 +11,19 @@ class Article(models.Model):
    def __str__(self):
         return self.titre
 
+class Person(models.Model):
+    nom = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=42)
+    def __str__(self):
+        return self.prenom
+
+class Contact(models.Model):
+    nom = models.CharField(max_length=255)
+    adresse = models.TextField()
+    photo = models.ImageField(upload_to="./media/image/")
+    def __str__(self):
+           return self.nom
+
 class Categorie(models.Model):
     nom = models.CharField(max_length=30)
     def __str__(self):

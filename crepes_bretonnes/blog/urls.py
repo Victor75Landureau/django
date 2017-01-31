@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from django.contrib import admin
-
 from . import views
 
 urlpatterns = [
@@ -11,6 +10,8 @@ urlpatterns = [
     url(r'^redirection$', views.view_redirection),
     url(r'^date$', views.date_actuelle),
     url(r'^contact/$', views.contact, name='contact'),
+    url(r'^voir_contacts/$', views.voir_contacts, name='voir_contacts'),
+    url(r'^person/$', views.person, name='person'),
     url(r'^addition/(?P<nombre1>\d+)/(?P<nombre2>\d+)/$', views.addition)
 ]
 
