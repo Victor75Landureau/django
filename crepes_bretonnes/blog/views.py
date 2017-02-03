@@ -32,15 +32,9 @@ def contact(request):
     # dans le formulaire ou qu'il contient des erreurs.
     if form.is_valid(): 
         # Ici nous pouvons traiter les données du formulaire
-        sujet = form.cleaned_data['sujet']
-        message = form.cleaned_data['message']
-        envoyeur = form.cleaned_data['envoyeur']
-        renvoi = form.cleaned_data['renvoi']
-
-        # Nous pourrions ici envoyer l'e-mail grâce aux données 
-        # que nous venons de récupérer
+        url = form.cleaned_data['url à reduire']
+        pseudo = form.cleaned_data['pseudo']
         envoi = True
-    
     # Quoiqu'il arrive, on affiche la page du formulaire.
     #Pour plus de filtre sur les formulaires cf openclassroom
     return render(request, 'blog/contact.html', locals())

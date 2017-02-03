@@ -1,0 +1,12 @@
+<h1> TP Mini URL Liste des Raccourcis </h1>
+<p><a href="{% url 'url_nouveau' %}">Raccourcir une URL.</a></p>
+<h1> Liste des urls raccourcis </h1>
+<ul>
+{% for mini in minis %}
+    <li> {{ miniurl }} via <a href="http://{{ request.get_host }}{% url 'url_redirection' mini.code %}">
+    {{ request.get_host }}{% url 'url_redirection' mini.code %}</a> 
+    {% if mini.pseudo %} par {{ mini.pseudo }}{% endif %} ({{ mini.nb_acces }} accès)</li>
+    {% empty %}
+    <li> Il n'y en a pas actuellement.</li>
+{% endfor %}
+</ul>
